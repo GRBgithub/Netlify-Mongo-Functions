@@ -2,10 +2,10 @@ const mongoose = require("mongoose");
 
 let _client;
 
-const connect = async (url) => {
+const connect = async () => {
   // create a new connection if one doesn't already exist
   if (!_client) {
-    _client = await mongoose.connect(url, {
+    _client = await mongoose.connect(process.env.MONGO_URL, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });

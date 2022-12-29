@@ -16,6 +16,7 @@ const Error = (errorMessage, statusCode = 500) => {
     body: JSON.stringify(errorMessage)
   };
 };
+
 module.exports = {
   Success,
   Error,
