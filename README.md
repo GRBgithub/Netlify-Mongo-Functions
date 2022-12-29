@@ -1,5 +1,4 @@
 
-![Logo](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/th5xamgrr6se0x5ro4g6.png)
 
 # Netlify MongoDB App
 This app is a simple serverless CRUD application that uses MongoDB as its database. It is hosted on Netlify and uses the MongoDB Atlas cloud service for hosting the database.
