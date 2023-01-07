@@ -1,5 +1,4 @@
 /** @format */
-const mongoose = require("mongoose");
 const handleRequest = require("../utils/request");
 const Movie = require("../models/movies-model");
 
