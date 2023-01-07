@@ -1,10 +1,10 @@
+/** @format */
 const mongoose = require("mongoose");
 
-let _client;
-
-const connect = async () => {
+const connect = async (_client) => {
   // create a new connection if one doesn't already exist
   if (!_client) {
+    mongoose.set("strictQuery", false);
     _client = await mongoose.connect(process.env.MONGO_URL, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
@@ -14,7 +14,7 @@ const connect = async () => {
   return _client;
 };
 
-const close = async () => {
+const close = async (_client) => {
   // destroy the connection if it exists
   if (_client) {
     await _client.disconnect();

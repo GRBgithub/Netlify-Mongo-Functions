@@ -4,24 +4,25 @@ const { connect, close } = require("./db");
 const Status = require("./status");
 const controllers = require("../controllers/index");
 
+let _client;
 exports.handler = async (event) => {
   // Destructure the event object to get the HTTP method and path
-  const { httpMethod, path, body } = event;
+  let { httpMethod, path, body } = event;
   // Call getControllerAndMethod to get the controller and method for the request
   const { controller, method, id } = getControllerAndMethod(path, httpMethod);
 
   if (!controller) return Status.NotFound();
   if (!method) return Status.Error("Method Not Allowed", 405);
-
-  // Connect to the database
-  await connect("mongodb+srv://GRB:2QiNKt8qHXbtr0It@cluster0.7vuaetn.mongodb.net/?retryWrites=true&w=majority");
+  if (body) body = JSON.parse(body);
 
   try {
+    // Connect to the database
+    await connect(_client);
     // Call the method on the controller
     return await controller[method](body, id);
   } finally {
     // Close the database connection after the request has completed
-    await close();
+    await close(_client);
   }
 };
 

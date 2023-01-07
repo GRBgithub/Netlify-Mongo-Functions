@@ -1,43 +1,42 @@
 /** @format */
+const mongoose = require("mongoose");
 const handleRequest = require("../utils/request");
 const Movie = require("../models/movies-model");
 
 const postMovies = handleRequest(async (body) => {
-  const movieData = body;
-  const movie = await Movie.create(movieData);
-  return movie;
+  const newModel = new Movie(body);
+  return await newModel.save();
 });
 
 const getMovies = handleRequest(async () => {
-  const movies = await Movie.find();
-  return movies;
+  const datas = await Movie.find();
+  return datas;
 });
 
-const getMoviesById = handleRequest(async (id) => {
-  const movie = await Movie.findById(id);
-  if (!movie) throw new Error("Movie not found");
-  return movie;
+const getMoviesById = handleRequest(async (body, id) => {
+  const data = await Movie.findById(id);
+  if (!data) throw new Error("Movie not found");
+  return data;
 });
 
-const updateMovies = handleRequest(async (id, body) => {
-  const movieData = body;
-  const movie = await Movie.findByIdAndUpdate(id, movieData, {
+const putMoviesById = handleRequest(async (body, id) => {
+  const data = await Movie.findByIdAndUpdate(id, body, {
     new: true,
   });
-  if (!movie) throw new Error("Movie not found");
-  return movie;
+  if (!data) throw new Error("Movie not found");
+  return data;
 });
 
-const deleteMovies = handleRequest(async (id) => {
-  const movie = await Movie.findByIdAndDelete(id);
-  if (!movie) throw new Error("Movie not found");
-  return movie;
+const deleteMoviesById = handleRequest(async (body, id) => {
+  const data = await Movie.findByIdAndDelete(id);
+  if (!data) throw new Error("Movie not found");
+  return data;
 });
 
 module.exports = {
   postMovies,
   getMovies,
   getMoviesById,
-  updateMovies,
-  deleteMovies,
+  putMoviesById,
+  deleteMoviesById,
 };

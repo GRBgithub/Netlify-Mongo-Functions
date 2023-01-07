@@ -7,7 +7,6 @@ const movieSchema = new mongoose.Schema({
   },
   year: {
     type: Number,
-    required: true
   }
 });
 
