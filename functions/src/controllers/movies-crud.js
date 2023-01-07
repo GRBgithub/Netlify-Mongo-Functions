@@ -1,25 +1,25 @@
 /** @format */
 const handleRequest = require("../utils/request");
-const Movie = require("../models/movies-model");
+const Movies = require("../models/movies-model");
 
 const postMovies = handleRequest(async (body) => {
-  const newModel = new Movie(body);
+  const newModel = new Movies(body);
   return await newModel.save();
 });
 
 const getMovies = handleRequest(async () => {
-  const datas = await Movie.find();
+  const datas = await Movies.find();
   return datas;
 });
 
 const getMoviesById = handleRequest(async (body, id) => {
-  const data = await Movie.findById(id);
+  const data = await Movies.findById(id);
   if (!data) throw new Error("Movie not found");
   return data;
 });
 
 const putMoviesById = handleRequest(async (body, id) => {
-  const data = await Movie.findByIdAndUpdate(id, body, {
+  const data = await Movies.findByIdAndUpdate(id, body, {
     new: true,
   });
   if (!data) throw new Error("Movie not found");
@@ -27,7 +27,7 @@ const putMoviesById = handleRequest(async (body, id) => {
 });
 
 const deleteMoviesById = handleRequest(async (body, id) => {
-  const data = await Movie.findByIdAndDelete(id);
+  const data = await Movies.findByIdAndDelete(id);
   if (!data) throw new Error("Movie not found");
   return data;
 });
