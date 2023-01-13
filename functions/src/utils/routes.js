@@ -5,7 +5,7 @@ const Status = require("./status");
 const controllers = require("../controllers/index");
 
 let _client;
-exports.handler = async (event) => {
+exports.handler = async (event, context, callback) => {
   // Destructure the event object to get the HTTP method and path
   let { httpMethod, path, body } = event;
   // Call getControllerAndMethod to get the controller and method for the request
@@ -19,7 +19,7 @@ exports.handler = async (event) => {
     // Connect to the database
     await connect(_client);
     // Call the method on the controller
-    return await controller[method](body, id);
+    callback(null, await controller[method](body, id));
   } finally {
     // Close the database connection after the request has completed
     await close(_client);
