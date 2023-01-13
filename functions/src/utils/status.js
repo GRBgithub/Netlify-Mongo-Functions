@@ -1,30 +1,29 @@
 /** @format */
+const headers = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Headers": "Content-Type",
+  "Content-Type": "application/json",
+};
 
 const Success = (data, statusCode = 200) => {
   return {
     statusCode,
     body: JSON.stringify(data),
-    headers: {
-      "access-control-allow-origin": "*",
-    },
+    headers,
   };
 };
 const NotFound = (errorMessage = "Not Found", statusCode = 404) => {
   return {
     statusCode,
     body: JSON.stringify(errorMessage),
-    headers: {
-      "access-control-allow-origin": "*",
-    },
+    headers,
   };
 };
 const Error = (errorMessage, statusCode = 500) => {
   return {
     statusCode,
     body: JSON.stringify(errorMessage),
-    headers: {
-      "access-control-allow-origin": "*",
-    },
+    headers,
   };
 };
 
