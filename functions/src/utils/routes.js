@@ -19,7 +19,9 @@ exports.handler = async (event, context, callback) => {
     // Connect to the database
     await connect(_client);
     // Call the method on the controller
-    callback(null, await controller[method](body, id));
+    const result = await controller[method](body, id);
+    console.log(result);
+    callback(null, result);
   } finally {
     // Close the database connection after the request has completed
     await close(_client);
