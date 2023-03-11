@@ -7,9 +7,9 @@ const controllers = require("../controllers/index");
 let _client;
 exports.handler = async (event, context, callback) => {
   // Destructure the event object to get the HTTP method and path
-  let { httpMethod, path, body } = event;
+  let { httpMethod, path, body, headers } = event;
   // Call getControllerAndMethod to get the controller and method for the request
-  const { controller, method, id } = getControllerAndMethod(path, httpMethod);
+  const { controller, method, id } = getControllerAndMethod(path, httpMethod, headers);
 
   if (!controller) return Status.NotFound();
   if (!method) return Status.Error("Method Not Allowed", 405);
@@ -19,7 +19,9 @@ exports.handler = async (event, context, callback) => {
     // Connect to the database
     await connect(_client);
     // Call the method on the controller
-    return await controller[method](body, id);
+    let x = await controller[method](body, id);
+    console.log(x);
+    return x;
   } finally {
     // Close the database connection after the request has completed
     await close(_client);
@@ -28,7 +30,7 @@ exports.handler = async (event, context, callback) => {
 
 const PATH_REGEX = /^\/(\w+)(?:\/(\w+))?/;
 
-const getControllerAndMethod = (path, httpMethod) => {
+const getControllerAndMethod = (path, httpMethod, headers) => {
   // Extract the resource and id from the path
   const [, resource, id] = path.replace("/api", "").match(PATH_REGEX);
   // Get the controller for the given resource
